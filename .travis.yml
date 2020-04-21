@@ -1,0 +1,22 @@
+language: shell
+services:
+  - docker
+
+env:
+  global:
+    # DOCKER_USERNAME
+    - secure: "qAMkGe/RRf6MrXsb0zBxpqVzl4OOyCIJl+QfSEHjybWMVm8800FeKJpDr7a6FarCKeJM34zW1szEhYfcGjZZaNcZq1fngj/gO1w7qHddjkgRKiBnBTZlI/UJtxokrUSkap9mU6JM/aQoqDGZxSdJrpJl0milQ3imEjJr/cUg7k6PUAAFIICPPCnjyNT53gzZ2SCJfU30BgvuTtfffPAC2blEOqGpR1jj6GTm++5mL+hZ543qRK9JE2MT2AjX2+BxoLRJk1wx0tWJC3heLMAZ055mIv7zRPPmVpdirgvw2v8qjbsk40o+ffQn/Xt4hDqvTFrXuRJHgEB0DO5drc078B22bSVoKrkxoEE8As+WBhJy81GHBUKt7mHanyKc7ODQ0hYtecx8LqnumpgIy3+fiGseoYFtLsMsRKuJKYKbdNNJrKg2K68xFdYhXFWzbeJ8/ADltP8WR4hiJpI5SU/A2Q1qV/y+uwd3otp/3QBzJJNrdSreSvrFmma8Q6X/5D6INW3WNewXkvBqF1UVgwTfWv7gwYHxcmkbPY66yY2Htusj/PghvXnS431T9AkrFvoFiSlNngm1XTm7KYysZnjKFH5WZw37UuCyxu8vzvr+diLstxhKLFFAvzOBqOVeoz4AvDACmxvpSd4/wZFrYHWhp/lxmiHlOrEB9T+NYxXQKh8="
+    # DOCKER_ACCESS_TOKEN
+    - secure: "QxXT+IDW9tgtmeALvNk4sub2Cb6YojEdpIqfRHuDM9zmobay5N8RV/dj3zNHtyIA5bYh9tbPiXdZONLLVEjFs8S0aSzxjG1sqqg9p8upCF2tT/FTszXJEquwwb0d3fNALExsWpVE7WY5lwRxIeK4kz/lqGTKBRB+1XICEINcP/nrKqUutpoReyOAQJC07vciXjJBlt9lm8EAwP/LUzWP5Sm8GVR8URjzDfYhgwOl+ZDZ4RMm0W+hz/jkka76IE7aIAiPgPG+wEi+hU6nNtJUJrTNcdDcFbKmnj44BEIg0JAUJdYxXiTDBygC5DLn90tXOIv7uJc9dKxzeQQGrGba23xXLvobp/1HQvX4IsRBkad7NL47h2R+0RkcO3r7Lcnb33VEDU9Lmtxa6S0Ym96jKWr9M6wnLyNIvcUNZU5Jpo23df/NTwH78y6hRqrf+HEeF+rfhrgUYGivmd9LySG2kHpMXEI58lHdOd+84n7hI2ne964eswCMi+a+UHIcpQ/vORvn3oDH9hKJ/dIeGjihAnrt8mTTqmb2Xoq0shatIruazsmFPOKnRfhOwLeX93wYa2FjGErMG1EhBDmsLeCDmiVOMQm4JFdTsPS7/2XMdG/fIza/YCVulhDbKOUjX257pPMX3tiEKUhogKTwg4jE6JwUdefroO0PxaqvvrFj7ys="
+    - IMAGE_NAME=baloiseincubator/stock-service
+
+install: skip
+
+script:
+  - docker build -t $IMAGE_NAME:$TRAVIS_COMMIT .
+  - echo "$DOCKER_ACCESS_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" != "master" ]; then docker push $IMAGE_NAME:$TRAVIS_COMMIT; fi
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then docker tag $IMAGE_NAME:$TRAVIS_COMMIT $IMAGE_NAME:latest; fi
+  - if [ "$TRAVIS_PULL_REQUEST" == "false" ] && [ "$TRAVIS_BRANCH" == "master" ]; then docker push $IMAGE_NAME:latest; fi
+  - if [ -n "$TRAVIS_TAG" ]; then docker tag $IMAGE_NAME:$TRAVIS_COMMIT $IMAGE_NAME:$TRAVIS_TAG; fi
+  - if [ -n "$TRAVIS_TAG" ]; then docker push $IMAGE_NAME:$TRAVIS_TAG; fi
