@@ -1,0 +1,11 @@
+package com.pizzeria.stockservice.infrastructure;
+
+import com.pizzeria.stockservice.domain.Ingredient;
+import org.springframework.data.jdbc.repository.query.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface IngredientRepository extends CrudRepository<Ingredient, Integer> {
+
+}
