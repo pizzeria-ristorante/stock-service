@@ -42,6 +42,13 @@ public class StockServiceRestController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping
+    public ResponseEntity<IngredientDto> deleteByName(@RequestBody IngredientDto ingredientDto) {
+        log.info("Reducing {} by {}", ingredientDto.getName(), ingredientDto.getQuantity());
+        ingredientStockService.removeIngredientFromStock(ingredientDto);
+        return ResponseEntity.ok().body(ingredientDto);
+    }
+
     private IngredientDto mapToDto(Ingredient ingredient) {
         return new IngredientDto(ingredient.getName(), ingredient.getQuantity());
     }

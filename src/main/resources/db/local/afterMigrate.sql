@@ -8,13 +8,13 @@ VALUES
     (5, 'Pilze', 45),
     (6, 'Schinken', 26),
     (7, 'Steinpilze', 11),
-    (8, 'Gorgonzola', 22)
-    (9, 'Ananas', 3)
-    (10, 'Sardellen', 4)
-    (11, 'Knoblauch', 5)
-    (12, 'Oel', 1100),
+    (8, 'Gorgonzola', 22),
+    (9, 'Ananas', 3),
+    (10, 'Sardellen', 4),
+    (11, 'Knoblauch', 5),
+    (12, 'Oel', 955),
     (13, 'Thunfisch', 10),
     (14, 'Zwiebeln', 66),
     (15, 'scharfe Salami', 51),
-    (16, 'Bueffelmozzarella', 21),
+    (16, 'Bueffelmozzarella', 21)
     ;
