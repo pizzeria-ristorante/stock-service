@@ -4,7 +4,7 @@ VALUES
     (1, 'Pizzateig', 114),
     (2, 'Tomaten', 45),
     (3, 'Mozzarella', 61),
-    (4, 'Salami', 33),
+    (4, 'PREVIEWS!!!!', 33),
     (5, 'Pilze', 45),
     (6, 'Schinken', 26),
     (7, 'Steinpilze', 11),
