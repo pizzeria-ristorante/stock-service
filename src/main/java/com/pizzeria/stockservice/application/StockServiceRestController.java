@@ -26,10 +26,10 @@ public class StockServiceRestController {
         Iterable<Ingredient> ingredients = ingredientStockService.getAllIngredientsInStock();
         Set<Ingredient> allIngredients = new HashSet<>();
         ingredients.forEach(allIngredients::add);
-        log.info("Found total of {} ingredient entries.", allIngredients.size());
+        log.info("Found total of {} ingredient entries, wanted is {}", allIngredients.size(), name);
         return allIngredients
                 .stream()
-                .filter(ingredient -> name.isPresent() ? ingredient.getName().equals(name.get()) : true)
+                .filter(ingredient -> name.isPresent() ? ingredient.getName().equalsIgnoreCase(name.get()) : true)
                 .map(this::mapToDto)
                 .collect(Collectors.toSet());
     }
